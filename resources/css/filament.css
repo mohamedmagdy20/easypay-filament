@@ -1,0 +1,27 @@
+.fi-sidebar {
+    background-color: #1e293b !important;
+}
+
+/* Custom sidebar button link background and text color */
+.fi-sidebar .fi-sidebar-item {
+    background-color: #3b82f6 !important; /* Blue background */
+    color: #ffffff !important; /* White text */
+    border-radius: 0.5rem !important; /* Rounded corners */
+    margin: 0.25rem 0 !important; /* Spacing between items */
+    padding: 0.5rem 1rem !important; /* Padding inside items */
+}
+
+/* Hover effect for sidebar button links */
+.fi-sidebar .fi-sidebar-item:hover {
+    background-color: #2563eb !important; /* Darker blue on hover */
+}
+
+/* Active (selected) sidebar button link */
+.fi-sidebar .fi-sidebar-item-active {
+    background-color: #1d4ed8 !important; /* Even darker blue for active item */
+}
+
+/* Custom icon color */
+.fi-sidebar .fi-sidebar-item-icon {
+    color: #ffffff !important; /* White icon color */
+}
