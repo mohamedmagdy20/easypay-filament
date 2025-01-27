@@ -8,6 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Client extends Model
 {
     use HasFactory;
+    public static string $modelLabel = 'عملاء';
+
+    // Plural label for the model
+    public static string $pluralModelLabel =  'عملاء';
+
     protected $fillable   = [
         'name',
         'address',

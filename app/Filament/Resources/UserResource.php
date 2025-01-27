@@ -103,4 +103,8 @@ class UserResource extends Resource
     {
         return __('lang.users');
     }
+    public static function getPluralModelLabel(): string
+    {
+        return __('lang.clients'); // Plural label
+    }
 }

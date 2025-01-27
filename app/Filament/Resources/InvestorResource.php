@@ -100,11 +100,17 @@ class InvestorResource extends Resource
     
     public static function getNavigationLabel(): string
     {
-        return __('lang.investors');
+        return __('lang.investors'); // Navigation label
     }
+
     public static function getModelLabel(): string
     {
-        return __('lang.investors');
+        return __('lang.investors'); // Singular label
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('lang.investors'); // Plural label
     }
     public static function getNavigationBadge(): ?string
     {

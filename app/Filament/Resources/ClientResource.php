@@ -93,11 +93,17 @@ class ClientResource extends Resource
 
     public static function getNavigationLabel(): string
     {
-        return __('lang.clients');
+        return __('lang.clients'); // Navigation label
     }
+
     public static function getModelLabel(): string
     {
-        return __('lang.clients');
+        return __('lang.clients'); // Singular label
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('lang.clients'); // Plural label
     }
     public static function getNavigationBadge(): ?string
     {
