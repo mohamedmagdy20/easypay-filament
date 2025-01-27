@@ -12,6 +12,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Hash;
 
 class UserResource extends Resource
 {
@@ -30,18 +31,24 @@ class UserResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('email')
-                    ->email()
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\DateTimePicker::make('email_verified_at'),
+                Forms\Components\TextInput::make('name')->label(__('lang.name'))->required(),
+                Forms\Components\TextInput::make('email')->label(__('lang.email'))->required()->email()->unique(User::class,'email',ignoreRecord:true),
                 Forms\Components\TextInput::make('password')
-                    ->password()
-                    ->required()
-                    ->maxLength(255),
+                ->password()
+                ->label(__('lang.password'))
+                ->dehydrateStateUsing(fn ($state) => Hash::make($state))
+                ->dehydrated(fn ($state) => filled($state))
+                ->required(fn (string $context): bool => $context === 'create')->confirmed(),
+                Forms\Components\TextInput::make('password_confirmation')->password()
+                ->label(__('lang.confirm_password'))
+                ->required(fn (string $context): bool => $context === 'create'),
+                Forms\Components\Select::make('roles')
+                ->relationship('roles', 'name')
+                ->multiple()
+                ->label(__('lang.roles'))
+                ->preload()
+                ->columnSpanFull()
+                ->searchable(),
             ]);
     }
 
@@ -49,24 +56,24 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('email')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('email_verified_at')
-                    ->dateTime()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('name')->label(__('lang.name'))->searchable()->sortable(),
+                Tables\Columns\TextColumn::make('email')->label(__('lang.email'))->searchable()->sortable(),
+                Tables\Columns\BadgeColumn::make('roles.name')->label(__('lang.roles'))
+                ->colors([
+                    'success' => 'المدير', // Set color for 'admin' role
+                    'info' => 'موظف', // Set color for 'customer' role
+                ])
+                ->icons([
+                    'heroicon-o-shield-check' => 'المدير', // Icon for 'admin' role
+                    'heroicon-m-user-circle' => 'موظف', // Icon for 'customer' role
+                ]),
+                Tables\Columns\TextColumn::make('created_at')->label(__('lang.craeted_at'))->date()->searchable()->sortable(),
+
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('roles')
+                ->relationship('roles','name'),
+                
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
@@ -106,5 +113,10 @@ class UserResource extends Resource
     public static function getPluralModelLabel(): string
     {
         return __('lang.clients'); // Plural label
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return __('filament-shield::filament-shield.nav.group');
     }
 }

@@ -23,17 +23,20 @@ class ClientResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
+
+                Forms\Components\TextInput::make('name')->label(__('lang.name'))
                     ->maxLength(255),
-                Forms\Components\TextInput::make('phone')
+                Forms\Components\TextInput::make('phone')->label(__('lang.phone'))
                     ->tel()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('national_id')
+                Forms\Components\TextInput::make('national_id')->label(__('lang.national_id'))
                     ->maxLength(255),
-                Forms\Components\TextInput::make('national_id_photo')
+
+                Forms\Components\TextInput::make('address')->label(__('lang.address'))
                     ->maxLength(255),
-                Forms\Components\TextInput::make('address')
-                    ->maxLength(255),
+                
+                Forms\Components\FileUpload::make('national_id_photo')->label(__('lang.national_id_photo'))->directory('form-attachments')->columnSpanFull()->image()->imageEditor(),
+
             ]);
     }
 
@@ -41,21 +44,17 @@ class ClientResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')
+                Tables\Columns\ImageColumn::make('national_id_photo')->label(__('lang.national_id_photo'))->defaultImageUrl('default.png')->circular(),
+                Tables\Columns\TextColumn::make('name')->label(__('lang.name'))
                     ->searchable(),
-                Tables\Columns\TextColumn::make('phone')
+                Tables\Columns\TextColumn::make('phone')->label(__('lang.phone'))
                     ->searchable(),
-                Tables\Columns\TextColumn::make('national_id')
+                Tables\Columns\TextColumn::make('national_id')->label(__('lang.national_id'))
                     ->searchable(),
-                Tables\Columns\TextColumn::make('national_id_photo')
+                   
+                Tables\Columns\TextColumn::make('address')->label(__('lang.address'))
                     ->searchable(),
-                Tables\Columns\TextColumn::make('address')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                Tables\Columns\TextColumn::make('created_at')->label(__('lang.craeted_at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

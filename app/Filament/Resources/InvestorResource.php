@@ -28,16 +28,16 @@ class InvestorResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
+                Forms\Components\TextInput::make('name')->label(__('lang.name'))
                     ->maxLength(255),
-                Forms\Components\TextInput::make('phone')
+                Forms\Components\TextInput::make('phone')->label(__('lang.phone'))
                     ->tel()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('capital')
+                Forms\Components\TextInput::make('capital')->label(__('lang.capital'))
                     ->numeric(),
-                Forms\Components\TextInput::make('total_benefits')
+                Forms\Components\TextInput::make('total_benefits')->label(__('lang.total_benefit'))
                     ->numeric(),
-                Forms\Components\TextInput::make('note')
+                Forms\Components\TextInput::make('note')->label(__('lang.note'))
                     ->maxLength(255),
             ]);
     }
@@ -46,26 +46,24 @@ class InvestorResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')
+                Tables\Columns\TextColumn::make('name')->label(__('lang.name'))
                     ->searchable(),
-                Tables\Columns\TextColumn::make('phone')
+                Tables\Columns\TextColumn::make('phone')->label(__('lang.phone'))
                     ->searchable(),
-                Tables\Columns\TextColumn::make('capital')
+                Tables\Columns\TextColumn::make('capital')->label(__('lang.capital'))
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('total_benefits')
+                Tables\Columns\TextColumn::make('total_benefits')->label(__('lang.total_benefit'))
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('note')
+                Tables\Columns\TextColumn::make('note')->label(__('lang.note'))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
+                    ->label(__('lang.craeted_at'))
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                
             ])
             ->filters([
                 //
